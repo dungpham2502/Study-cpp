@@ -1,0 +1,53 @@
+# C++ specific
+*.o
+*.obj
+*.so
+*.a
+*.dll
+*.dylib
+*.exe
+*.out
+*.app
+
+# Compiled binary
+graph
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Build directories
+build/
+Debug/
+Release/
+x64/
+x86/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.xcodeproj/
+*.xcworkspace/
+
+# Dependency directories
+dependencies/
+libs/
+external/
+
+# Generated documentation
+docs/generated/
+
+# Temporary and backup files
+*.log
+*.tmp
+*.bak
