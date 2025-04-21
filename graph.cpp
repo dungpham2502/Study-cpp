@@ -2,6 +2,7 @@
 #include <vector>
 #include <list>
 #include <string>
+#include <queue>
 
 class Graph {
 private:
@@ -9,7 +10,6 @@ private:
     int numVertices;
     // Adjacency Matrix representation
     std::vector<std::vector<bool> > adjMatrix;
-    // Adjacency List representation
     std::vector<std::list<int> > adjList;
 
 public:
@@ -108,6 +108,63 @@ public:
         }
         return adjList[vertex];
     }
+
+    void DFS(int startVertex) {
+        if (startVertex < 0 || startVertex >= numVertices) {
+            std::cout << "Invalid starting vertex" << std::endl;
+            return;
+        }
+        std::vector<bool> visited(numVertices, false);
+        std::cout << "DFS starting from vertex " << startVertex << ": ";
+        DFSUtil(startVertex, visited);
+        for (int i = 0; i < numVertices; i++) {
+            if (!visited[i]) {
+                DFSUtil(i, visited);
+            }
+        }
+        std::cout << std::endl;
+    }
+
+    void DFSUtil(int vertex, std::vector<bool>& visited) {
+        visited[vertex] = true;
+        std::cout << vertex << " ";
+        for (std::list<int>::const_iterator it = adjList[vertex].begin(); it != adjList[vertex].end(); ++it) {
+            if (!visited[*it]) {
+            DFSUtil(*it, visited);
+            }
+        }
+    }
+
+    void BFS(int startVertex) {
+        if (startVertex < 0 || startVertex >= numVertices) {
+            std::cout << "Invalid starting vertex" << std::endl;
+            return;
+        }
+        std::vector<bool> visited(numVertices, false);
+        std::queue<int> queue;
+        
+        // Mark the starting vertex as visited and add it to the queue
+        visited[startVertex] = true;
+        queue.push(startVertex);
+
+        std::cout << "BFS starting from vertex " << startVertex << ": ";
+
+        while (!queue.empty()) {
+            int vertex = queue.front();
+            queue.pop();
+            std::cout << vertex << " ";
+
+            // Store the neighbors in a variable to avoid dangling iterator
+            std::list<int> neighbors = getNeighbors(vertex);
+            for (std::list<int>::const_iterator it = neighbors.begin(); it != neighbors.end(); ++it) {
+                if (!visited[*it]) {
+                    visited[*it] = true;
+                    queue.push(*it);
+                }
+            }
+        }
+        std::cout << std::endl;
+    }
 };
 
 // Example usage
@@ -139,6 +196,11 @@ int main() {
     std::cout << "\nRemoving edge 1-4" << std::endl;
     g.removeEdge(1, 4);
     g.printList();
+
+    g.DFS(0);    
+
+    g.BFS(0);
+    
     
     return 0;
 }
